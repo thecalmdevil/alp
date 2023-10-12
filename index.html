@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alphabet Numerology</title>
+    <style>
+        /* Your CSS styles here (as shown in the previous response) */
+        .letter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .letter-value {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Alphabet Numerology</h1>
+        
+        <label for="letterInput">Type a letter:</label>
+        <input type="text" id="letterInput" placeholder="Type a letter" oninput="updateValue()">
+        
+        <div class="letter-container" id="lettersContainer">
+            <!-- The numerical value for each letter will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Fibonacci-like sequence using numbers 1 to 9
+        const fibonacciSequence = [1, 1, 2, 3, 5, 8, 1, 9, 2, 1, 3, 4, 7, 1, 8, 9, 8, 7, 5, 2, 7, 9, 7, 2, 9];
+
+        // Function to calculate the numerical value of a letter
+        function calculateLetterValue(letter) {
+            if (letter >= 'A' && letter <= 'Z') {
+                const index = letter.charCodeAt(0) - 'A'.charCodeAt(0);
+                return fibonacciSequence[index];
+            }
+            return 0; // Handle non-alphabet characters
+        }
+
+        // Function to update the displayed values
+        function updateValue() {
+            const input = document.getElementById('letterInput');
+            const lettersContainer = document.getElementById('lettersContainer');
+            const letters = input.value.toUpperCase();
+            lettersContainer.innerHTML = ''; // Clear the container
+            
+            let totalNumericalValue = 0;
+            
+            for (const letter of letters) {
+                const numericalValue = calculateLetterValue(letter);
+                totalNumericalValue += numericalValue;
+                const letterElement = document.createElement('div');
+                letterElement.classList.add('letter-value');
+                letterElement.textContent = `${letter} (${numericalValue})`;
+                lettersContainer.appendChild(letterElement);
+            }
+            
+            const valueDisplay = document.createElement('div');
+            valueDisplay.textContent = `Total: (${totalNumericalValue})`;
+            lettersContainer.appendChild(valueDisplay);
+        }
+
+        // Attach an event listener to the input field
+        const inputField = document.getElementById('letterInput');
+        inputField.addEventListener('input', updateValue);
+    </script>
+</body>
+</html>
